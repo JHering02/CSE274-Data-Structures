@@ -63,7 +63,7 @@ public class WordList {
 			for (int i = 0; i < words.length; i++) {
 				res[i] = words[i];
 			}
-			res[res.length] = s;
+			res[res.length - 1] = s;
 			this.words = res;
 			return true;
 		} catch (Exception e) {
