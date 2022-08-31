@@ -126,8 +126,9 @@ public class WordList {
 			for (int i = 0; i <= index; i++) {
 				if (i == index) {
 					i++;
-					for (int j = i; j < words.length; j++) {
+					for (int j = i - 1; j < removed.length; j++) {
 						removed[j] = words[j];
+						i++;
 					}
 				} else {
 					removed[i] = words[i];
@@ -173,10 +174,15 @@ public class WordList {
 		try {
 			String[] res = new String[words.length - 1];
 			for (int i = 0; i < words.length; i++) {
-				if (this.words[i].equals(s)) {
-					i++;
-					for (int j = i; j < words.length; j++) {
-						res[j] = words[j];
+				if(this.words[i] != null) {					
+					if (this.words[i].equals(s)) {
+						i++;
+						for (int j = i - 1; j < res.length; j++) {
+							res[j] = words[i];
+							i++;
+						}
+					} else {
+						res[i] = words[i];
 					}
 				} else {
 					res[i] = words[i];

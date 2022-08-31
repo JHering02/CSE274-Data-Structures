@@ -22,15 +22,22 @@ public class Driver {
 		WordList w2 = new WordList();
 		System.out.println(w1.size());
 		System.out.println(w2.size());
+		System.out.println();
 		
 		//Testing the ability to add words to the list
 		w1.add("Yippie");
-		System.out.println(w1.get(w1.size()) + "\n" + w1.size());
+		System.out.println(w1.get(w1.size() - 1));
+		System.out.println(w1.size());
 		w2.add(5, "Yes sire");
 		System.out.println(w2.get(5));
-
+		System.out.println(w2.size());
+		System.out.println();
+		
 		//Testing the Remove method
 		w1.remove(15);
+		System.out.println(w1.get(14));
+		w2.remove("Yes sire");
+		System.out.println(w2.get(5));
 	}
 
 }
