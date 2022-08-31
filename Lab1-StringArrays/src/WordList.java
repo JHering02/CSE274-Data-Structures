@@ -31,7 +31,7 @@ public class WordList {
 	 */
 	public WordList(int capacity) {
 		this.words = new String[capacity];
-		this.size = this.words.length;
+		this.size = words.length;
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class WordList {
 	 */
 	public WordList() {
 		this.words = new String[DEFAULT_CAPACITY];
-		this.size = this.words.length;
+		this.size = words.length;
 	}
 
 	/**
@@ -65,6 +65,7 @@ public class WordList {
 			}
 			res[res.length - 1] = s;
 			this.words = res;
+			this.size = words.length;
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -99,6 +100,7 @@ public class WordList {
 				}
 			}
 			this.words = res;
+			this.size = words.length;
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -132,6 +134,7 @@ public class WordList {
 				}
 			}
 			this.words = removed;
+			this.size = words.length;
 			return res;
 		}
 	}
@@ -179,6 +182,8 @@ public class WordList {
 					res[i] = words[i];
 				}
 			}
+			this.words = res;
+			this.size = words.length;
 			return true;
 		} catch (Exception e) {
 			return false;
