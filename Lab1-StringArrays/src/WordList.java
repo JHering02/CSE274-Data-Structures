@@ -223,7 +223,7 @@ public class WordList {
 	 * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt;= size
 	 */
 	public String set(int index, String s) {
-		if (index < this.words.length || index < 0) {
+		if (index > this.words.length || index < 0) {
 			throw new IndexOutOfBoundsException();
 		} else {
 			String res = words[index];
