@@ -36,7 +36,7 @@ public class Driver {
 
 		// Testing the Remove method
 		w1.remove(15);
-		System.out.println(w1.get(14));
+		System.out.println(w1.get(w1.size() - 1));
 		System.out.println(w1.size());
 		w2.remove("Yes sire");
 		System.out.println(w2.get(5));
@@ -57,6 +57,14 @@ public class Driver {
 		System.out.println(w1.get(5));
 		System.out.println();
 		
+		// Testing ToArray
+		w1.clear();
+		w1.add("One");
+		w1.add("Two");
+		w1.add("Three");
+		for(String word : w1.toArray()) {
+			System.out.println(word);
+		}
 	}
 
 }
