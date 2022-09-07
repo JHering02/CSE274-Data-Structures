@@ -78,13 +78,13 @@ public class LinkedList {
 	 * Inserts an item at the beginning of the list.
 	 */
 	public void insertFirst(int num) {
-		if(head == null) {
-			this.tail = new Node(num);
-		} else {
+		if(size == 0) {			
 			this.head = new Node(num);
+		} else {
+			this.head.next = new Node(head.data);
+			this.head.data = num;
 		}
-		this.size++;
-		
+		size++;
 	}
 	
 	/*
