@@ -1,7 +1,8 @@
 import java.util.NoSuchElementException;
 
 /**
- * This is an Overloaded LinkedList Class with various methods.
+ * This is an Overloaded LinkedList Class with various methods that make it
+ * work.
  * 
  * @author James Hering, CSE 274, 7 September 2022
  */
@@ -23,16 +24,20 @@ public class LinkedList {
 
 	/*
 	 * Returns a space-separated list of the elements in the list. If the list
-	 * contains no elements, return an empty string ""
+	 * contains no elements, return an empty string ("")
 	 */
 	public String toString() {
 		String list = "";
-		Node current = head;
-		while (current != null) {
-			list = list + current.data + " ";
-			current = current.next;
+		if (size == 0) {
+			return list;
+		} else {
+			Node current = head;
+			while (current != null) {
+				list = list + current.data + " ";
+				current = current.next;
+			}
+			return list;
 		}
-		return list;
 	}
 
 	/*
@@ -73,7 +78,7 @@ public class LinkedList {
 		}
 		Node temp = head;
 		int current = 0;
-		while(current != index) {
+		while (current != index) {
 			current++;
 			temp = temp.next;
 		}
@@ -99,19 +104,19 @@ public class LinkedList {
 	 * Inserts an item at the end of the list.
 	 */
 	public void insertLast(int num) {
-			Node last = head;
-			while(last.next != tail) {
-				last = last.next;
-			}
-			if(tail == null) {			
-				this.tail = new Node(num);
-				last.next = tail;
-			} else {
-				last = last.next;
-				last.data = tail.data;
-				this.tail = new Node(num);
-				last.next = tail;
-			}
+		Node last = head;
+		while (last.next != tail) {
+			last = last.next;
+		}
+		if (tail == null) {
+			this.tail = new Node(num);
+			last.next = tail;
+		} else {
+			last = last.next;
+			last.data = tail.data;
+			this.tail = new Node(num);
+			last.next = tail;
+		}
 		this.size++;
 	}
 
@@ -137,12 +142,12 @@ public class LinkedList {
 	 */
 	public int removeLast() {
 		int res = 0;
-		if(this.size == 0) {
+		if (this.size == 0) {
 			throw new NoSuchElementException();
 		} else {
 			res = this.tail.data;
 			Node last = this.head;
-			while(last.next != tail) {
+			while (last.next != tail) {
 				last = last.next;
 			}
 			this.tail = last;
