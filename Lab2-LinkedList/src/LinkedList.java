@@ -81,15 +81,10 @@ public class LinkedList {
 		if (head == null) {
 			this.head = new Node(num);
 		} else {
-			int temp = head.data;
+			Node temp = head;
+			temp.next = head.next;
 			this.head = new Node(num);
-			this.head.next = new Node(temp);
-			Node last = this.head;
-			while(last.next != null) {
-				last = last.next;
-			}
-			last.next = tail;
-			
+			this.head.next = temp;
 		}
 		size++;
 	}
@@ -98,7 +93,7 @@ public class LinkedList {
 	 * Inserts an item at the end of the list.
 	 */
 	public void insertLast(int num) {
-			Node last = this.head;
+			Node last = head;
 			while(last.next != tail) {
 				last = last.next;
 			}
