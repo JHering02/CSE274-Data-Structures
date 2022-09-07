@@ -27,6 +27,16 @@ public class Driver {
 		list.insertLast(51);
 		System.out.println("20 17 50 51? " + list.toString());
 		
+		list.removeFirst();
+		list.removeFirst();
+		System.out.println("50 51? " + list.toString());
+		
+		list.insertFirst(17);
+		list.insertFirst(20);		
+		list.removeLast();
+		list.removeLast();
+		System.out.println("20 17? " + list.toString());
+		
 
 	}
 	
