@@ -71,7 +71,13 @@ public class LinkedList {
 		if (index > size || index < 0) {
 			throw new IndexOutOfBoundsException();
 		}
-		return 0;
+		Node temp = head;
+		int current = 0;
+		while(current != index) {
+			current++;
+			temp = temp.next;
+		}
+		return temp.data;
 	}
 
 	/*
@@ -140,7 +146,7 @@ public class LinkedList {
 				last = last.next;
 			}
 			this.tail = last;
-			last.next = tail;
+			this.tail.next = null;
 		}
 		size--;
 		return 0;
