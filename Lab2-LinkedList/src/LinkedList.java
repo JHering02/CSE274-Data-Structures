@@ -78,7 +78,7 @@ public class LinkedList {
 	 * Inserts an item at the beginning of the list.
 	 */
 	public void insertFirst(int num) {
-		if(head.next == null) {
+		if(head == null) {
 			this.tail = new Node(num);
 		} else {
 			this.head = new Node(num);
@@ -92,10 +92,10 @@ public class LinkedList {
 	 */
 	public void insertLast(int num) {
 		Node last = this.head;
-		while(last.next != null) {
+		while(last != null) {
 			last = last.next;
 		}
-		last.next = new Node(num);
+		last = new Node(num);
 		this.size++;
 	}
 	
