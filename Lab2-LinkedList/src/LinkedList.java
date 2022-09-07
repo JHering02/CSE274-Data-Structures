@@ -1,4 +1,9 @@
-
+import java.util.NoSuchElementException;
+/**
+ * This is an Overloaded LinkedList Class with various methods.
+ * 
+ * @author James Hering, CSE 274, 7 September 2022
+ */
 public class LinkedList {
 	
 	private Node head;
@@ -36,8 +41,12 @@ public class LinkedList {
 	 */
 	public int getFirst() {
 		int res = 0;
-		
-		return 0;
+		if(this.size == 0) {
+			throw new NoSuchElementException();
+		} else {
+			res = this.head.data;
+			return res;
+		}
 	}
 	
 	/*
@@ -45,7 +54,13 @@ public class LinkedList {
 	 * throw a NoSuchElementException.
 	 */
 	public int getLast() {
-		return 0;
+		int res = 0;
+		if(this.size == 0) {
+			throw new NoSuchElementException();
+		} else {
+			res = this.tail.data;
+			return res;
+		}
 	}
 	
 	/*
@@ -53,6 +68,9 @@ public class LinkedList {
 	 * is not valid, throw an IndexOutOfBoundsException.
 	 */
 	public int getAt(int index) {
+		if(index > size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
 		return 0;
 	}
 	
@@ -60,7 +78,12 @@ public class LinkedList {
 	 * Inserts an item at the beginning of the list.
 	 */
 	public void insertFirst(int num) {
-		
+		if(head.next == null) {
+			this.tail = new Node(num);
+		} else {
+			this.head = new Node(num);
+		}
+		this.size++;
 		
 	}
 	
@@ -68,7 +91,12 @@ public class LinkedList {
 	 * Inserts an item at the end of the list.
 	 */
 	public void insertLast(int num) {
-		
+		Node last = this.head;
+		while(last.next != null) {
+			last = last.next;
+		}
+		last.next = new Node(num);
+		this.size++;
 	}
 	
 	/*
@@ -76,7 +104,15 @@ public class LinkedList {
 	 * list is empty, throw a NoSuchElementException.
 	 */
 	public int removeFirst() {
-		return 0;
+		int res = 0;
+		if(this.size == 0) {
+			throw new NoSuchElementException();
+		} else {
+			res = this.head.data;
+			this.head = head.next;
+			size--;
+			return res;
+		}
 	}
 	
 	/*
@@ -84,6 +120,7 @@ public class LinkedList {
 	 * list is empty, throw a NoSuchElementException.
 	 */
 	public int removeLast() {
+		size--;
 		return 0;
 	}
 	
@@ -93,13 +130,16 @@ public class LinkedList {
 	 * Returns the number of elements in the list.
 	 */
 	public int getSize() {
-		return -1;
+		return this.size;
 	}
 	
 	/*
 	 * Returns true if the list is empty, and false otherwise.
 	 */
 	public boolean isEmpty() {
+		if(size == 0) {
+			return true;
+		}
 		return false;
 	}
 	

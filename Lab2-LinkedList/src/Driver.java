@@ -1,4 +1,8 @@
-
+/**
+ * This is a test class for the Linked List
+ * 
+ * @author James Hering, CSE 274, 9 September 2022
+ */
 public class Driver {
 	
 	public static void main(String[] args) {
