@@ -11,15 +11,50 @@ import java.util.Scanner;
  *
  */
 public class WordProcessor {
-	private String currFile;
-	private int currIndex = 0;
-	private Scanner process;
-	
-	
-	public WordProcessor(String fileName) throws FileNotFoundException {
-		this.process = new Scanner(new File(fileName));
-		this.currFile = fileName;
+	private static final String Table1 = "File\tNum unique words\t\n========== ==========\n";
+	private static final String Table2 = "%s\n\tRank Word\t Frequency\n\t==== ====\t=========\n";
+	private String folderName;
+	private File folder;
+	private File[] files;
+
+	/**
+	 * Default parameter constructor for a WordProcessor, that gives it all the info
+	 * to start analyzing the words.
+	 * 
+	 * @param name
+	 */
+	public WordProcessor(String name) {
+		this.folderName = name;
+		this.folder = new File(name);
+		this.files = folder.listFiles();
 	}
-	
-	
+
+	public String toString() {
+		String res = "";
+		return res;
+	}
+
+	/**
+	 * Runs through a file, and finds the total amount of unique words contained
+	 * within that file. Has O(n^2) time complexity.
+	 * 
+	 * @param fi text file
+	 * @return integer with the total amount of unique words
+	 * @throws FileNotFoundException if the file does not exist
+	 */
+	public int totalUnique(File fi) throws FileNotFoundException {
+		int res = 0;
+		Scanner reader = new Scanner(fi);
+		ArrayList<String> words = new ArrayList<String>();
+		while (reader.hasNextLine()) {
+			String[] temp = reader.nextLine().split(" ");
+			for (String s : temp) {
+				if (!words.contains(s)) {
+					words.add(s);
+				}
+			}
+		}
+		reader.close();
+		return res;
+	}
 }
