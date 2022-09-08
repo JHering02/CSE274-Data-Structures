@@ -29,8 +29,32 @@ public class WordProcessor {
 		this.files = folder.listFiles();
 	}
 
+	/**
+	 * This toString method outputs all the data related to the WordProcessor in
+	 * table format.
+	 * 
+	 * @return string with all the data in it
+	 */
 	public String toString() {
 		String res = "";
+		res += ("The number of unique words in each file\n" + Table1);
+		for (File fi : files) {
+			try {
+				res += String.format("%s\t %d\n", fi.getName(), totalUnique(fi));
+			} catch (FileNotFoundException e) {
+				// if the file somehow doesnt exist while grabbing the number of unique words
+				e.printStackTrace();
+			}
+		}
+		res += ("The 10 most common words in each file\n");
+		for (File fi : files) {
+			// try {
+
+			// } //catch (FileNotFoundException e) {
+			// if the file somehow doesnt exist while grabbing the number of unique words
+			// e.printStackTrace();
+			// }
+		}
 		return res;
 	}
 
@@ -47,14 +71,52 @@ public class WordProcessor {
 		Scanner reader = new Scanner(fi);
 		ArrayList<String> words = new ArrayList<String>();
 		while (reader.hasNextLine()) {
-			String[] temp = reader.nextLine().split(" ");
+			String[] temp = reader.nextLine().split("[^a-zA-Z]+");
 			for (String s : temp) {
-				if (!words.contains(s)) {
+				s = s.toLowerCase();
+				if (!words.contains(s) && !s.equals("")) {
 					words.add(s);
 				}
 			}
 		}
 		reader.close();
+		words.remove("a");
+		words.remove("an");
+		words.remove("and");
+		words.remove("the");
+		res = words.size();
 		return res;
 	}
+
+	public ArrayList<UniqueWord> mostCommon(File fi) {
+		return null;
+
+	}
+
+	/**
+	 * Get method to return the amount of text files inside of the WordProcessor.
+	 * 
+	 * @return amount of files
+	 */
+	public int getFileAmt() {
+		return files.length;
+	}
+
+	/**
+	 * Private class to keep track of each words frequency inside of the text file.
+	 * 
+	 * @author James H
+	 *
+	 */
+	private class UniqueWord {
+		private int frequency;
+		private String word;
+
+		private UniqueWord(String wordIn) {
+			this.word = wordIn;
+			this.frequency = 0;
+		}
+
+	}
+
 }
