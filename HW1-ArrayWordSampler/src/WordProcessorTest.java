@@ -15,6 +15,7 @@ public class WordProcessorTest {
 	public void testGetters() {
 		WordProcessor test = new WordProcessor("C:\\Users\\james\\git\\CSE274\\HW1-ArrayWordSampler\\textFiles");
 		assertEquals((test.getFileAmt()), 3);
+		assertEquals((test.getFolderName()), "C:\\Users\\james\\git\\CSE274\\HW1-ArrayWordSampler\\textFiles");
 	}
 
 }
