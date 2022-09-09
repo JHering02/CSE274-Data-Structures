@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -88,9 +89,35 @@ public class WordProcessor {
 		return res;
 	}
 
-	public ArrayList<UniqueWord> mostCommon(File fi) {
-		return null;
-
+	/**
+	 * A method which takes all the unique words and keeps track of their individual
+	 * frequencies finding the most common ones.
+	 * 
+	 * @param fi text file
+	 * @return the 10 most common words excluding the exceptions
+	 * @throws FileNotFoundException
+	 */
+	public ArrayList<UniqueWord> mostCommon(File fi) throws FileNotFoundException {
+		Scanner reader = new Scanner(fi);
+		ArrayList<UniqueWord> res = new ArrayList<UniqueWord>();
+		while (reader.hasNextLine()) {
+			String[] temp = reader.nextLine().split("[^a-zA-Z]+");
+			for (String s : temp) {
+				s = s.toLowerCase();
+				if (!res.contains(s) && !s.equals("")) {
+					res.add(new UniqueWord(s));
+				} else if (res.contains(s)) {
+					res.get(res.indexOf(s)).frequency++;
+				}
+			}
+		}
+		reader.close();
+		res.remove(res.get(res.indexOf("a")));
+		res.remove(res.get(res.indexOf("an")));
+		res.remove(res.get(res.indexOf("and")));
+		res.remove(res.get(res.indexOf("the")));
+		Collections.sort(res, Collections.reverseOrder());
+		return res;
 	}
 
 	/**
@@ -114,7 +141,7 @@ public class WordProcessor {
 
 		private UniqueWord(String wordIn) {
 			this.word = wordIn;
-			this.frequency = 0;
+			this.frequency = 1;
 		}
 
 	}
