@@ -133,6 +133,15 @@ public class WordProcessor {
 	}
 
 	/**
+	 * Get method to return the name of the directory.
+	 * 
+	 * @return foldername
+	 */
+	public String getFolderName() {
+		return folderName;
+	}
+
+	/**
 	 * Helper method to check and see if a word should be excluded or not. Has
 	 * O(logn) time complexity worst case.
 	 * 
