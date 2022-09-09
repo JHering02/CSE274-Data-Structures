@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ public class WordProcessor {
 	private String folderName;
 	private File folder;
 	private File[] files;
+	private static final String[] EXCLUDED_WORDS = { "", "a", "an", "and", "the" };
 
 	/**
 	 * Default parameter constructor for a WordProcessor, that gives it all the info
@@ -43,18 +45,23 @@ public class WordProcessor {
 			try {
 				res += String.format("%s\t %d\n", fi.getName(), totalUnique(fi));
 			} catch (FileNotFoundException e) {
-				// if the file somehow doesnt exist while grabbing the number of unique words
+				// if the file somehow doesn't exist while grabbing the number of unique words
 				e.printStackTrace();
 			}
 		}
 		res += ("The 10 most common words in each file\n");
 		for (File fi : files) {
-			// try {
-
-			// } //catch (FileNotFoundException e) {
-			// if the file somehow doesnt exist while grabbing the number of unique words
-			// e.printStackTrace();
-			// }
+			try {
+				ArrayList<UniqueWord> temp = mostCommon(fi);
+				for (UniqueWord word : temp) {
+					int rank = 0;
+					res += String.format(Table2 + "\t%d %s\t %d", rank, word.word, word.frequency);
+					rank++;
+				}
+			} catch (FileNotFoundException e) {
+				// if the file somehow doesn't exist while grabbing the number of unique words
+				e.printStackTrace();
+			}
 		}
 		return res;
 	}
@@ -75,16 +82,12 @@ public class WordProcessor {
 			String[] temp = reader.nextLine().split("[^a-zA-Z]+");
 			for (String s : temp) {
 				s = s.toLowerCase();
-				if (!words.contains(s) && !s.equals("")) {
+				if (!words.contains(s) && !containsEX(s)) {
 					words.add(s);
 				}
 			}
 		}
 		reader.close();
-		words.remove("a");
-		words.remove("an");
-		words.remove("and");
-		words.remove("the");
 		res = words.size();
 		return res;
 	}
@@ -95,29 +98,32 @@ public class WordProcessor {
 	 * 
 	 * @param fi text file
 	 * @return the 10 most common words excluding the exceptions
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException if the file doesn't exist
 	 */
 	public ArrayList<UniqueWord> mostCommon(File fi) throws FileNotFoundException {
 		Scanner reader = new Scanner(fi);
-		ArrayList<UniqueWord> res = new ArrayList<UniqueWord>();
+		ArrayList<String> words = new ArrayList<String>();
+		ArrayList<Integer> frequency = new ArrayList<Integer>();
 		while (reader.hasNextLine()) {
 			String[] temp = reader.nextLine().split("[^a-zA-Z]+");
 			for (String s : temp) {
 				s = s.toLowerCase();
-				if (!res.contains(s) && !s.equals("")) {
-					res.add(new UniqueWord(s));
-				} else if (res.contains(s)) {
-					res.get(res.indexOf(s)).frequency++;
+				if (!words.contains(s) && !containsEX(s)) {
+					words.add(s);
+					frequency.add(1);
+				} else if (!containsEX(s)) {
+					frequency.set(words.indexOf(s),  1 + frequency.get(words.indexOf(s)));
 				}
+
 			}
 		}
 		reader.close();
-		res.remove(res.get(res.indexOf("a")));
-		res.remove(res.get(res.indexOf("an")));
-		res.remove(res.get(res.indexOf("and")));
-		res.remove(res.get(res.indexOf("the")));
-		Collections.sort(res, Collections.reverseOrder());
-		return res;
+		UniqueWord[] res = new UniqueWord[words.size()];
+		for(int i = 0; i < res.length; i++) {
+			res[i] = new UniqueWord(words.get(i), frequency.get(i));
+		}
+		
+		return null;
 	}
 
 	/**
@@ -130,6 +136,21 @@ public class WordProcessor {
 	}
 
 	/**
+	 * Helper method to check and see if a word should be excluded or not.
+	 * 
+	 * @param ex the word that will be checked
+	 * @return true/false
+	 */
+	private boolean containsEX(String ex) {
+		for(String s : EXCLUDED_WORDS) {
+			if(s.equals(ex)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Private class to keep track of each words frequency inside of the text file.
 	 * 
 	 * @author James H
@@ -139,9 +160,9 @@ public class WordProcessor {
 		private int frequency;
 		private String word;
 
-		private UniqueWord(String wordIn) {
+		private UniqueWord(String wordIn, int freq) {
 			this.word = wordIn;
-			this.frequency = 1;
+			this.frequency = freq;
 		}
 
 	}
