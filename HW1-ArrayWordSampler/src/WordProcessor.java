@@ -54,9 +54,11 @@ public class WordProcessor {
 		for (File fi : files) {
 			try {
 				UniqueWord[] temp = totalUnique(fi);
+				temp = tenCommon(temp, temp.length);
+				int rank = 1;
 				res += String.format(Table2, fi.getName());
 				for (int i = 0; i < 10; i++) {
-
+					res += String.format("\t%d %s\t%d\n", rank, temp[i].word, temp[i].frequency);
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -68,7 +70,7 @@ public class WordProcessor {
 
 	/**
 	 * Runs through a file, and finds all unique words with their frequencies inside
-	 * of a text file. Has O(n^2) time complexity.
+	 * of a text file. Has O(n^2) time complexity worst case.
 	 * 
 	 * @param fi text file
 	 * @return integer with the total amount of unique words
@@ -101,7 +103,7 @@ public class WordProcessor {
 
 	/**
 	 * Helper method that recursively sorts a complete list of UniqueWords and
-	 * returns the 10 most frequent ones.
+	 * returns the 10 most frequent ones. Has O(n^2) time complexity worst case.
 	 * 
 	 * @param words inital word list
 	 * @return copyOf the initial list with only the 10 most frequent
@@ -130,7 +132,8 @@ public class WordProcessor {
 	}
 
 	/**
-	 * Helper method to check and see if a word should be excluded or not.
+	 * Helper method to check and see if a word should be excluded or not. Has
+	 * O(logn) time complexity worst case.
 	 * 
 	 * @param ex the word that will be checked
 	 * @return true/false
