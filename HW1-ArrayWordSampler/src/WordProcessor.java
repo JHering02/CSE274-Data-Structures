@@ -13,8 +13,8 @@ import java.util.Scanner;
  *
  */
 public class WordProcessor {
-	private static final String Table1 = "File\tNum unique words\t\n========== ==========\n";
-	private static final String Table2 = "%s\n\tRank Word\t Frequency\n\t==== ====\t=========\n";
+	private static final String Table1 = "File\tNumUniqueWords\t\n=====\t==========\n";
+	private static final String Table2 = "%s\n\tRank\tWord\tFrequency\n\t====\t====\t=========\n";
 	private String folderName;
 	private File folder;
 	private File[] files;
@@ -44,13 +44,13 @@ public class WordProcessor {
 		for (File fi : files) {
 			try {
 				UniqueWord[] temp = totalUnique(fi);
-				res += String.format("%s\t %d\n", fi.getName(), temp.length);
+				res += String.format("%s\t%d\n", fi.getName(), temp.length);
 			} catch (FileNotFoundException e) {
 				// if the file somehow doesn't exist while grabbing the number of unique words
 				e.printStackTrace();
 			}
 		}
-		res += ("The 10 most common words in each file\n");
+		res += ("\nThe 10 most common words in each file\n");
 		for (File fi : files) {
 			try {
 				UniqueWord[] temp = totalUnique(fi);
@@ -58,7 +58,8 @@ public class WordProcessor {
 				int rank = 1;
 				res += String.format(Table2, fi.getName());
 				for (int i = 0; i < 10; i++) {
-					res += String.format("\t%d %s\t%d\n", rank, temp[i].word, temp[i].frequency);
+					res += String.format("\t%d\t%s\t%d\n", rank, temp[i].word, temp[i].frequency);
+					rank++;
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -110,7 +111,7 @@ public class WordProcessor {
 	 */
 	public UniqueWord[] tenCommon(UniqueWord[] words, int cur) {
 		if (cur == 1) {
-			return Arrays.copyOfRange(words, words.length - 11, words.length - 1);
+			return Arrays.copyOfRange(words, words.length - 10, words.length);
 		}
 		for (int i = 0; i < cur - 1; i++) {
 			if (words[i].frequency > words[i + 1].frequency) {
