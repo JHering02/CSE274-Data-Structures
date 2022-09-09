@@ -14,11 +14,13 @@ public class DisplayWordProcessor {
 	 * @param args normal arguments
 	 */
 	public static void main(String[] args) {
+		long start = System.currentTimeMillis();
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Please enter the directory you wish to display.");
 		WordProcessor wp = new WordProcessor(reader.next());
 		System.out.printf(wp.toString());
-
+		System.out.println();
+		System.out.println("Time Taken : " + (System.currentTimeMillis() - start) + " ms");
 	}
 
 }
