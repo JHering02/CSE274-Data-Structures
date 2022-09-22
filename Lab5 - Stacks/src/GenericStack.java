@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  *
  */
 public class GenericStack<T> implements StackInterface<T> {
-	private Node head;
+	private Node<T> head;
 	private int size = 0;
 	
 	/**
@@ -24,7 +24,7 @@ public class GenericStack<T> implements StackInterface<T> {
 		if (head == null) {
 			this.head = new Node<T>(newEntry);
 		} else {
-			Node<T> temp = new Node<T>((T)head.data);
+			Node<T> temp = new Node<T>(head.data);
 			temp.next = head.next;
 			this.head = new Node<T>(newEntry);
 			this.head.next = temp;
@@ -41,10 +41,10 @@ public class GenericStack<T> implements StackInterface<T> {
 		if (this.size == 0) {
 			throw new NoSuchElementException();
 		} else {
-			Object res = head.data;
+			T res = head.data;
 			head = head.next;
 			size--;
-			return (T)res;
+			return res;
 		}
 	}
 
