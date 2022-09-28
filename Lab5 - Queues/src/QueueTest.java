@@ -23,7 +23,7 @@ public class QueueTest {
 		
 		// LinkedQueue
 		assertTrue(queue2.isEmpty());
-		queue.add(10);
+		queue2.add(10);
 		assertFalse(queue2.isEmpty());
 	}
 	
@@ -59,8 +59,10 @@ public class QueueTest {
 		
 		for (int n : data) {
 			queue.add(n);
-			queue.add(n);
 			queue2.add(n);
+		}
+		for (int n : data) {
+			queue.add(n);
 			queue2.add(n);
 		}
 		queue.remove();
@@ -81,11 +83,32 @@ public class QueueTest {
 			assertEquals(n, (int)queue2.remove());
 		}		
 
-		while(!queue.isEmpty()) {
+		while(!(queue.isEmpty())) {
 			queue.remove();
-		}		
+		}
 		
-		assertTrue(queue.isEmpty());		
+		while(!(queue2.isEmpty())) {
+			queue2.remove();
+		}
 		
+		assertTrue(queue.isEmpty());
+		assertTrue(queue2.isEmpty());
+		
+	}
+	
+	@Test
+	public void testClear() {
+		int[] data = {47, 83, 55, 99, 66, 27, 68};
+		
+		for(int n : data) {
+			queue.add(n);
+			queue2.add(n);
+		}
+		assertFalse(queue.isEmpty());
+		assertFalse(queue2.isEmpty());
+		queue.clear();
+		queue2.clear();
+		assertTrue(queue.isEmpty());
+		assertTrue(queue2.isEmpty());
 	}
 }
