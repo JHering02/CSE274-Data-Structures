@@ -108,6 +108,7 @@ public class GenericLinkedList<T extends Comparable<T>> {
 	 */
 	public void clear() {
 		head = new Node<T>(null);
+		tail = new Node<T>(null);
 		size = 0;
 	}
 
