@@ -41,7 +41,6 @@ public class LinkedSet implements Set {
 		// be sure to update size or toArray() won't work
 		for (String s : strings) {
 			add(s);
-			size++;
 		}
 		success = true;
 		return success;
@@ -54,8 +53,18 @@ public class LinkedSet implements Set {
 		// Use the find method to help with this. Because find will tell
 		// you which node you need to remove.
 		// be sure to update size or toArray() won't work
-		if (size > 0) {
-			head = head.next;
+		if (size > 0 && (find(s) != null)) {
+			Node temp = head;
+			if(temp.data.equals(s)) {
+				head = temp.next;
+			}
+			while (find(s) != null) {
+				if ((temp != null) && !(temp.next.data.equals(s))) {
+					temp = temp.next;
+				} else {
+					temp.next = temp.next.next;
+				}
+			}
 			size--;
 			success = true;
 		} else {
@@ -68,9 +77,9 @@ public class LinkedSet implements Set {
 	@Override
 	public boolean contains(String s) {
 		// TODO
-		if(find(s) != null) {
+		if (find(s) != null) {
 			return true;
-		} else {			
+		} else {
 			return false;
 		}
 	}
@@ -90,6 +99,7 @@ public class LinkedSet implements Set {
 		// No loop is needed here, because garbage collection will
 		// take care of everything as soon as the head is set to null.
 		head = null;
+		size = 0;
 	}
 
 	/*
@@ -102,10 +112,10 @@ public class LinkedSet implements Set {
 	private Node find(String s) {
 		Node res = head;
 		// iterates linearly to find the first node with data equal to parameter s
-		while ((res.next != null) && !(res.data.equals(s))) {
+		while ((res != null) && !(res.data.equals(s))) {
 			res = res.next;
 		}
-		if (res.data.equals(s)) {
+		if ((res != null) && (res.data.equals(s))) {
 			return res;
 		} else {
 			return null;
@@ -121,6 +131,7 @@ public class LinkedSet implements Set {
 		while (current != null && index < size) {
 			newArray[index] = current.data;
 			index++;
+			current = current.next;
 		}
 		return newArray;
 	}

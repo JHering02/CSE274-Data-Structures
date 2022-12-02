@@ -142,33 +142,34 @@ public class TestLinkedSet {
 		
 		assertArrayEquals(expectedArray, s.toArray());
 	}
+}
 	
 	/*
 	 * This test is meant to check if the algorithm for remove matches
 	 * what was shown in class (replacing removed item with last item)
 	 */
-	@Test
-	public void testRemoveAlgorithm() {
-		Set s = new LinkedSet();
-		String[] expArr1 = {"S", "U", "E", "H"};
-		String[] expArr2 = {"U", "E", "S"};
-		String[] expArr3 = {"E", "S"};
-		String[] expArr4 = {"E"};
-
-		s.add("H");
-		s.add("O");
-		s.add("U");
-		s.add("S");
-		s.add("E");
-		
-		s.remove("O");
-		assertArrayEquals(expArr1, s.toArray());
-		s.remove("H");
-		assertArrayEquals(expArr2, s.toArray());
-		s.remove("U");
-		assertArrayEquals(expArr3, s.toArray());
-		s.remove("S");
-		assertArrayEquals(expArr4, s.toArray());
-	}
-
-}
+//	@Test
+//	public void testRemoveAlgorithm() {
+//		Set s = new LinkedSet();
+//		String[] expArr1 = {"S", "U", "E", "H"};
+//		String[] expArr2 = {"U", "E", "S"};
+//		String[] expArr3 = {"E", "S"};
+//		String[] expArr4 = {"E"};
+//
+//		s.add("H");
+//		s.add("O");
+//		s.add("U");
+//		s.add("S");
+//		s.add("E");
+//		
+//		s.remove("O");
+//		assertArrayEquals(expArr1, s.toArray());
+//		s.remove("H");
+//		assertArrayEquals(expArr2, s.toArray());
+//		s.remove("U");
+//		assertArrayEquals(expArr3, s.toArray());
+//		s.remove("S");
+//		assertArrayEquals(expArr4, s.toArray());
+//	}
+//
+//}
