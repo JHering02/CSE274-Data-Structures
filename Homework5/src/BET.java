@@ -1,16 +1,20 @@
+import java.util.Stack;
 
 /**
  * This is a binary expression tree. It is initialized with a postfix string and
  * can be printed out as either the postfix expression or the infix expression.
  * It does
  * 
- * @author john1819
+ * @author john1819, James Hering
  *
+ *         2 December 2022
  */
 public class BET {
 
 	private BinaryNode root;
 	private String postfix;
+	private final String OPS = "+-*/^";
+	private int size = 0;
 
 	/**
 	 * Default constructor - creates an empty tree
@@ -37,7 +41,45 @@ public class BET {
 	 * @return - true if tree build, false if bad pf format
 	 */
 	public boolean buildFromPostfix(String pf) {
-		return false;
+		// Check if the postfix is valid
+		if (!OPS.contains(pf.substring(pf.length() - 1))) {
+			return false;
+		} else if (pf.contains("(") || pf.contains(")")) {
+			return false;
+		} else if (pf.contains("[") || pf.contains("]")) {
+			return false;
+		}
+		// Make a new root if there was one already, and Re-assign postfix
+		root = null;
+		postfix = pf;
+		String[] post = postfix.split(" ");
+		Stack<BinaryNode> order = new Stack<BinaryNode>();
+		// Iterate through an array of each postfix character
+		for (String ch : post) {
+			if (!OPS.contains(ch)) {
+				order.push(new BinaryNode(ch)); // Push operand to stack
+				size++; // Add a node to size
+			} else {
+				// If operator, pop both stack operands & mk new Node
+				BinaryNode exp1 = order.pop();
+				BinaryNode exp2 = order.pop();
+				BinaryNode res = new BinaryNode(ch);
+				res.left = exp1;
+				res.right = exp2;
+				order.push(res);
+				size++; // Still adding a node here, just an operator
+			}
+		}
+		root = order.pop(); // Allocate the new built tree using stack
+		if (!order.isEmpty()) {
+			// If the stack isn't empty, what do we do?
+			BinaryNode res = new BinaryNode(post[post.length - 1]);
+			res.left = order.pop();
+			res.right = root;
+			root = res;
+			size++;
+		}
+		return true;
 	}
 
 	/**
@@ -45,7 +87,41 @@ public class BET {
 	 * "No expression available"
 	 */
 	public void printInfixExpression() {
+		// Check for an empty tree 1st then call recursive infix
+		if (root == null) {
+			System.out.println("No expression available");
+			return;
+		}
+		Stack<String> order = new Stack<String>();
+		printInfix(order, postfix.split(" "), 0);
+	}
 
+	/**
+	 * Private recursive helper method that is meant for printInfixExpression().
+	 */
+	private void printInfix(Stack<String> order, String[] post, int index) {
+		if (index < post.length) { // This is our recursive condition
+			if (!OPS.contains(post[index])) {
+				order.push(post[index]); // Push Operands
+				printInfix(order, post, index + 1);
+			} else {
+				String ch1 = order.pop();
+				String ch2 = order.pop();
+				String res = String.format("( %s %s %s )", ch2, post[index], ch1);
+				order.push(res); // Push formatted infix expression to the stack
+				printInfix(order, post, index + 1);
+			}
+		}
+		if (index == 0) {
+			String str = order.pop();
+			if (!order.isEmpty()) {
+				String ch2 = order.pop();
+				String res = String.format("%s %s %s", ch2, post[post.length - 1], str);
+				order.push(res); // Push formatted infix expression to the stack
+				str = order.pop();
+			}
+			System.out.println(str);
+		}
 	}
 
 	/**
@@ -53,7 +129,11 @@ public class BET {
 	 * prints "No expression available"
 	 */
 	public void printPostfixExpression() {
-
+		if (root == null) {
+			System.out.println("No expression available");
+		} else {
+			System.out.println(postfix);
+		}
 	}
 
 	/**
@@ -62,7 +142,7 @@ public class BET {
 	 * @return int
 	 */
 	public int size() {
-		return 0;
+		return size;
 	}
 
 	/**
@@ -71,7 +151,7 @@ public class BET {
 	 * @return boolean
 	 */
 	public boolean isEmpty() {
-		return true;
+		return size == 0;
 	}
 
 	/**

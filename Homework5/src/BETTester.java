@@ -19,7 +19,7 @@ public class BETTester {
 		// Test 1
 		tree.buildFromPostfix("4 50 6 + +");
 		tree.printPostfixExpression();
-		System.out.println("Ideal output is: 4 +  50 + 6 ");
+		System.out.println("Ideal output is: 4 + 50 + 6 ");
 		System.out.println("Accepted output is ( 4 + ( 50 + 6 ) )  ");
 		
 		System.out.println("Actual output");
